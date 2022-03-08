@@ -13,7 +13,7 @@
             <header-component></header-component>
         </div>
         <div id="main">
-            <main-component></main-component>
+            @yield('content')
         </div>
         <div id="footer">
             <footer-component></footer-component>
