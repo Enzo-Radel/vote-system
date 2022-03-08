@@ -1,5 +1,7 @@
 <template>
-  
+    <div>
+        <h1 class="text-success">Texto de teste main</h1>
+    </div>
 </template>
 
 <script>
