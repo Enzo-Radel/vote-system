@@ -8,6 +8,7 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th>Id</th>
                         <th>Título</th>
                         <th>Início</th>
                         <th>Fim</th>
@@ -18,7 +19,12 @@
                 <tbody>
                     <!-- Mudar cor caso não esteja disponível -->
                     <tr v-for="enquete in enquetes" :key="enquete.id">
-                        <td v-for="(atributo, index) in enquete" :key="index">{{atributo}}</td>
+                        <template v-for="(atributo, index) in enquete">
+                            <td v-if="(typeof(atributo) != 'object')" :key="index">
+                                <span>{{atributo}}</span>
+                            </td>
+                        </template>
+                        <td>Estado</td>
                         <td>
                             <!-- Valirdar caso não esteja disponível -->
                             <a :href="rota +'/'+ enquete.id" class="btn btn-sm btn-success">Responder</a>
