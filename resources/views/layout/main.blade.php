@@ -13,7 +13,7 @@
         <div id="header">
             <header-component></header-component>
         </div>
-        <div id="main" class="flex-grow-1">
+        <div id="main" class="flex-grow-1 w-75 align-self-center mt-3">
             @yield('content')
         </div>
         <div id="footer">
