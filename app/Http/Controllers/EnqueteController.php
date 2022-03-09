@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Enquete;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class EnqueteController extends Controller
 {
@@ -14,7 +15,7 @@ class EnqueteController extends Controller
      */
     public function index()
     {
-        $enquetes = Enquete::with('respostas')->get();
+        $enquetes = Enquete::with('respostas')->select('id', 'title', 'begin', 'end')->get();
         return view('index', compact('enquetes'));
     }
 
@@ -25,7 +26,7 @@ class EnqueteController extends Controller
      */
     public function create()
     {
-        //
+        return view('create');
     }
 
     /**
@@ -36,7 +37,19 @@ class EnqueteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $enquete = new Enquete;
+        
+        $validate = Validator::validate($data, $enquete->rules());
+
+        if (!$validate) {
+            return redirect()->back()->withErrors($validate);
+        }
+
+        // Criar mensagem de resposta
+        $enquete->create($data);
+        return redirect()->route('index');
     }
 
     /**

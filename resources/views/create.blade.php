@@ -1,8 +1,7 @@
 @extends('layout.main')
 
 @section('content')
-    <index-page
-        :enquetes="{{$enquetes}}"
+    <create-page
         rota="{{route('index')}}"
         csrf_token="{{@csrf_token()}}"
     />

@@ -20,4 +20,12 @@ class Enquete extends Model
     public function respostas() {
         return $this->hasMany(Resposta::class, 'enquete_id', 'id');
     }
+
+    public function rules() {
+        return [
+            'title' => 'required',
+            'begin' => 'required',
+            'end'   => 'required'
+        ];
+    }
 }

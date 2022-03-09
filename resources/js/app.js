@@ -23,6 +23,7 @@ Vue.component('header-component', require('./components/layout/Header.vue').defa
 Vue.component('footer-component', require('./components/layout/Footer.vue').default);
 
 Vue.component('index-page', require('./components/pages/Index.vue').default);
+Vue.component('create-page', require('./components/pages/Create.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
