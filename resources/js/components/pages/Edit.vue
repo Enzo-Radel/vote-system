@@ -1,17 +1,19 @@
 <template>
     <div class="card">
         <div class="card-header">
-            <h2>Criar Enquete</h2>
+            <h2>Editar Enquete: {{enquete.title}}</h2>
         </div>
         <div class="card-body">
+            <!-- Componente de fomulário genérico de enquetes -->
             <form-component
-                :rota="rota"
-                method="create"
+                :rota="rota +'/'+enquete.id"
+                method="edit"
+                :enquete="enquete"
                 :csrf_token="csrf_token"
             />
         </div>
         <div class="card-footer">
-            <button class="btn btn-success" @click="criarEnquete">Cadastrar</button>
+            <button class="btn btn-success" @click="editarEnquete">Atualizar</button>
             <a :href="rota" class="btn btn-secondary">Voltar</a>
         </div>
     </div>
@@ -26,12 +28,13 @@ export default {
     },
 
     props: {
+        enquete: Object,
         rota: String,
         csrf_token: String,
     },
 
     methods: {
-        criarEnquete() {
+        editarEnquete() {
             let form = document.getElementById('enquete-form');
             form.submit();
         }

@@ -31,9 +31,9 @@
                                 <summary>opções</summary>
                                 <div class="d-flex flex-column">
                                     <a :href="rota +'/'+ enquete.id" class="btn btn-sm btn-success mt-1">Responder</a>
-                                    <a :href="rota +'/edit/'+ enquete.id" class="btn btn-sm btn-primary mt-1">Editar</a>
-                                    <form :action="rota +'/destroy/'+ enquete.id" class="mt-1">
-                                        <input type="hidden" name="_mehtod" value="DELETE">
+                                    <a :href="rota +'/'+ enquete.id +'/edit'" class="btn btn-sm btn-primary mt-1">Editar</a>
+                                    <form :action="rota +'/'+ enquete.id" class="mt-1" method="POST">
+                                        <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" :value="csrf_token">
                                         <button type="submit" class="btn btn-sm btn-danger w-100" >Deletar</button>
                                     </form>

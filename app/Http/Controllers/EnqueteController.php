@@ -72,7 +72,6 @@ class EnqueteController extends Controller
     public function edit($id)
     {
         $enquete = Enquete::find($id);
-
         // Configurar mensagem de erro para caso enquete não exista
         return view('edit', compact('enquete'));
     }
@@ -86,7 +85,19 @@ class EnqueteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+
+        $enquete = Enquete::find($id);
+        
+        $validate = Validator::validate($data, $enquete->rules());
+
+        if (!$validate) {
+            return redirect()->back()->withErrors($validate);
+        }
+
+        // Criar mensagem de resposta
+        $enquete->update($data);
+        return redirect()->route('enquete.index');
     }
 
     /**
@@ -97,6 +108,9 @@ class EnqueteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $enquete = Enquete::find($id);
+
+        $enquete->delete();
+        return redirect()->route('enquete.index');
     }
 }
