@@ -27,13 +27,25 @@
                         <td>Estado</td>
                         <td>
                             <!-- Valirdar caso não esteja disponível -->
-                            <a :href="rota +'/'+ enquete.id" class="btn btn-sm btn-success">Responder</a>
+                            <details>
+                                <summary>opções</summary>
+                                <div class="d-flex flex-column">
+                                    <a :href="rota +'/'+ enquete.id" class="btn btn-sm btn-success mt-1">Responder</a>
+                                    <a :href="rota +'/edit/'+ enquete.id" class="btn btn-sm btn-primary mt-1">Editar</a>
+                                    <form :action="rota +'/destroy/'+ enquete.id" class="mt-1">
+                                        <input type="hidden" name="_mehtod" value="DELETE">
+                                        <input type="hidden" name="_token" :value="csrf_token">
+                                        <button type="submit" class="btn btn-sm btn-danger w-100" >Deletar</button>
+                                    </form>
+                                </div>
+                            </details>
+                            <!-- <a :href="rota +'/'+ enquete.id" class="btn btn-sm btn-success">Responder</a>
                             <a :href="rota +'/edit/'+ enquete.id" class="btn btn-sm btn-primary">Editar</a>
                             <form :action="rota +'/destroy/'+ enquete.id">
                                 <input type="hidden" name="_mehtod" value="DELETE">
                                 <input type="hidden" name="_token" :value="csrf_token">
                                 <button type="submit" class="btn btn-sm btn-danger">Deletar</button>
-                            </form>
+                            </form> -->
                         </td>
                     </tr>
                 </tbody>
