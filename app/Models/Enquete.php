@@ -23,17 +23,19 @@ class Enquete extends Model
 
     public function rules() {
         return [
-            'title' => 'required',
-            'begin' => 'required',
-            'end'   => 'required'
+            'title'         => 'required',
+            'begin'         => 'required',
+            'end'           => 'required',
+            'respostas.*'   => 'required',
         ];
     }
 
     public function messages() {
         return [
-            'title.required'    => 'O título é obrigatório',
-            'begin.required'    => 'A data de início é obrigatória',
-            'end.required'      => 'A data final é obrigatória',
+            'title.required'        => 'O título é obrigatório',
+            'begin.required'        => 'A data de início é obrigatória',
+            'end.required'          => 'A data final é obrigatória',
+            'respostas.*.required'  => 'A resposta precisa ter conteúdo',
         ];
     }
 

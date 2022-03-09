@@ -49,6 +49,16 @@ class EnqueteController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        // $validateRespostas = Validator::validate($data, [
+        //     'respostas.*' => 'required',
+        // ], [
+        //     'respostas.*.required' => 'todas as respostas precisam ter conteúdo',
+        // ]);
+
+        // if (!$validateRespostas) {
+        //     return redirect()->back()->withErrors($validateRespostas);
+        // }
+
         // $respostasVazias = [];
         // foreach ($data['respostas'] as $resposta) {
         //     if ($resposta == null) {
@@ -109,10 +119,10 @@ class EnqueteController extends Controller
 
         $enquete = Enquete::find($id);
         
-        $validate = Validator::validate($data, $enquete->rules());
+        $validator = Validator::validate($data, $enquete->rules(), $enquete->messages());
 
-        if (!$validate) {
-            return redirect()->back()->withErrors($validate);
+        if (!$validator) {
+            return redirect()->back()->withErrors($validator);
         }
 
         // Criar mensagem de resposta
