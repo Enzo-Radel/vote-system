@@ -6,6 +6,7 @@
         <div class="card-body">
             <form-component
                 :rota="rota"
+                :errors="errors"
                 method="create"
                 :csrf_token="csrf_token"
             />
@@ -27,6 +28,7 @@ export default {
 
     props: {
         rota: String,
+        errors: Object,
         csrf_token: String,
     },
 

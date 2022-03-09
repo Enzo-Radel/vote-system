@@ -28,4 +28,19 @@ class Enquete extends Model
             'end'   => 'required'
         ];
     }
+
+    public function messages() {
+        return [
+            'title.required'    => 'O título é obrigatório',
+            'begin.required'    => 'A data de início é obrigatória',
+            'end.required'      => 'A data final é obrigatória',
+        ];
+    }
+
+    public function deleteWithRespostas() {
+        foreach ($this->respostas as $resposta) {
+            $resposta->delete();
+        }
+        $this->delete();
+    }
 }

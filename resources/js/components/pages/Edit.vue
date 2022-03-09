@@ -10,6 +10,7 @@
                 method="edit"
                 :enquete="enquete"
                 :csrf_token="csrf_token"
+                :errors="errors"
             />
         </div>
         <div class="card-footer">
@@ -31,6 +32,7 @@ export default {
         enquete: Object,
         rota: String,
         csrf_token: String,
+        errors: Object,
     },
 
     methods: {

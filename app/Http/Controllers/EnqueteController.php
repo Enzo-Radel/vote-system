@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Enquete;
+use App\Models\Resposta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -40,15 +41,34 @@ class EnqueteController extends Controller
         $data = $request->all();
 
         $enquete = new Enquete;
-        
-        $validate = Validator::validate($data, $enquete->rules());
 
-        if (!$validate) {
-            return redirect()->back()->withErrors($validate);
+        $validator = Validator::make($data, $enquete->rules(), $enquete->messages());
+ 
+        // dd($validator->fails());
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // $respostasVazias = [];
+        // foreach ($data['respostas'] as $resposta) {
+        //     if ($resposta == null) {
+        //         // array_push($respostasVazias, 'resposta-'+$index);
+        //         return redirect()->back();
+        //     }
+        // }
+
+        $response = $enquete->create($data);
+
+        if($response) {
+            foreach ($data['respostas'] as $resposta) {
+                Resposta::create([
+                    'text' => $resposta,
+                    'enquete_id' => $response->id
+                ]);
+            }
         }
 
         // Criar mensagem de resposta
-        $enquete->create($data);
         return redirect()->route('enquete.index');
     }
 
@@ -96,7 +116,20 @@ class EnqueteController extends Controller
         }
 
         // Criar mensagem de resposta
-        $enquete->update($data);
+        $response = $enquete->update($data);
+
+        if($response) {
+            foreach ($enquete->respostas as $resposta) {
+                $resposta->delete();
+            }
+
+            foreach ($data['respostas'] as $resposta) {
+                Resposta::create([
+                    'text' => $resposta,
+                    'enquete_id' => $id
+                ]);
+            }
+        }
         return redirect()->route('enquete.index');
     }
 
@@ -110,7 +143,7 @@ class EnqueteController extends Controller
     {
         $enquete = Enquete::find($id);
 
-        $enquete->delete();
+        $enquete->deleteWithRespostas();
         return redirect()->route('enquete.index');
     }
 }
