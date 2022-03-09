@@ -17,5 +17,7 @@ class Enquete extends Model
         'end'
     ];
 
-
+    public function respostas() {
+        return $this->hasMany(Resposta::class, 'enquete_id', 'id');
+    }
 }

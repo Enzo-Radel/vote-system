@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Enquete;
 use Illuminate\Http\Request;
 
 class EnqueteController extends Controller
@@ -13,7 +14,8 @@ class EnqueteController extends Controller
      */
     public function index()
     {
-        return view('index');
+        $enquetes = Enquete::with('respostas')->get();
+        return view('index', compact('enquetes'));
     }
 
     /**
