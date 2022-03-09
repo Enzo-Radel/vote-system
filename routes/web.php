@@ -18,4 +18,4 @@ use App\Http\Controllers\EnqueteController;
 //     return view('welcome');
 // });
 
-Route::resource('/', EnqueteController::class);
+Route::resource('/enquete', EnqueteController::class);

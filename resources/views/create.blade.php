@@ -2,7 +2,7 @@
 
 @section('content')
     <create-page
-        rota="{{route('index')}}"
+        rota="{{route('enquete.index')}}"
         csrf_token="{{@csrf_token()}}"
     />
 @endsection

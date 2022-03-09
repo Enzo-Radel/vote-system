@@ -49,7 +49,7 @@ class EnqueteController extends Controller
 
         // Criar mensagem de resposta
         $enquete->create($data);
-        return redirect()->route('index');
+        return redirect()->route('enquete.index');
     }
 
     /**
@@ -71,7 +71,10 @@ class EnqueteController extends Controller
      */
     public function edit($id)
     {
-        //
+        $enquete = Enquete::find($id);
+
+        // Configurar mensagem de erro para caso enquete não exista
+        return view('edit', compact('enquete'));
     }
 
     /**
