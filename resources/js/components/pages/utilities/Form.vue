@@ -23,18 +23,38 @@
         </div>
 
         <hr>
-        <div class="d-flex justify-content-between">
-            <h4>Respostas</h4>
-            <div class="form-group">
-                <label for="input-num-respostas">Número de respostas (Mínimo 3):</label>
-                <input class="form-control" type="number" name="num-respostas" id="input-num-respostas" v-model="totalRespostas">
+        <div v-if="method == 'create'">
+            <div class="d-flex justify-content-between">
+                <h4>Respostas</h4>
+                <div class="form-group">
+                    <label for="input-num-respostas">Número de respostas (Mínimo 3):</label>
+                    <input class="form-control" type="number" name="num-respostas" id="input-num-respostas" v-model="totalRespostas">
+                </div>
+            </div>
+            <br>
+            <div class="form-group" id="group-all-answers" v-if="totalRespostas >= 3">
+                <div v-for="count in parseInt(totalRespostas)" :key="count" class="form-group" id="group-answer">
+                    <label :for="'input-resposta-'+count" class="form-label">Resposta {{count}}:</label>
+                    <input class="form-control" type="text" :name="'respostas['+count+']'" :id="'input-resposta-'+count">
+                </div>
             </div>
         </div>
-        <br>
-        <div class="form-group" id="group-all-answers" v-if="totalRespostas >= 3">
-            <div v-for="count in parseInt(totalRespostas)" :key="count" class="form-group" id="group-answer">
-                <label :for="'input-resposta-'+count" class="form-label">Resposta {{count}}:</label>
-                <input class="form-control" type="text" :name="'respostas['+count+']'" :id="'input-resposta-'+count">
+        <div v-else>
+            <div class="d-flex justify-content-between">
+                <h4>Respostas</h4>
+                <div class="form-group">
+                    <label for="input-num-respostas">Número de respostas (Mínimo 3):</label>
+                    <input :class="'form-control ' + (totalRespostas < 3 ? 'border-danger text-danger' : '')" type="number" name="num-respostas" id="input-num-respostas" v-model="totalRespostas">
+                    <p v-if="totalRespostas < 3" class="text-danger">Valor mínimo é 3 opções</p>
+                </div>
+            </div>
+            <br>
+            <div class="form-group" id="group-all-answers" v-if="totalRespostas >= 3">
+                <div v-for="count in parseInt(totalRespostas)" :key="count" class="form-group" id="group-answer">
+                    <label :for="'input-resposta-'+count" class="form-label">Resposta {{count}}:</label>
+                    <input v-if="respostas[count-1]" class="form-control" type="text" :name="'respostas['+count+']'" :id="'input-resposta-'+count" :value="respostas[count-1]">
+                    <input v-else class="form-control" type="text" :name="'respostas['+count+']'" :id="'input-resposta-'+count">
+                </div>
             </div>
         </div>
     </form>
@@ -51,8 +71,21 @@ export default {
     },
 
     data() {
-        return {
-            totalRespostas: 3,
+        if (this.method == 'edit') {
+            let totalRespostas_tmp = this.enquete.respostas;
+            let respostas_tmp = [];
+            totalRespostas_tmp.forEach(resposta => {
+                respostas_tmp.push(resposta.text);
+            });
+            return {
+                respostas: respostas_tmp,
+                totalRespostas: totalRespostas_tmp.length,
+                
+            }
+        } else {
+            return {
+                totalRespostas: 3,
+            }
         }
     }
 }

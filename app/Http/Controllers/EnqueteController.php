@@ -91,7 +91,7 @@ class EnqueteController extends Controller
      */
     public function edit($id)
     {
-        $enquete = Enquete::find($id);
+        $enquete = Enquete::with('respostas')->find($id);
         // Configurar mensagem de erro para caso enquete não exista
         return view('edit', compact('enquete'));
     }
