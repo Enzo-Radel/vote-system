@@ -13,7 +13,7 @@
 </pre>
 
 <p>Agora copie o arquivo .env.example para .env</p>
-<p>Após isso acesse o arquivo .env e mude os valores das seguintes chaves</p>
+<p>Após isso acesse o arquivo .env e mude os valores das seguintes chaves para os valores apresentados</p>
         
 <pre>
     DB_DATABASE=vote_system
@@ -21,7 +21,7 @@
     DB_PASSWORD=vs_pass
 </pre>
 
-<p>Agora basta executar os seguintes comandos na ordem q são mostrados</p>
+<p>Agora basta executar os seguintes comandos na ordem que são mostrados</p>
 
 <pre>
     php artisan key:generate
@@ -31,4 +31,4 @@
     npm run dev
     php artisan serve
 </pre>
-<p>Por fim acesse a porta do localhost mostrada</p>
+<p>Por fim acesse a porta do localhost mostrada.</p>
