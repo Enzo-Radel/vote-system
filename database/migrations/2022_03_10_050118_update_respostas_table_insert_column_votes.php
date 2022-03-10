@@ -14,7 +14,7 @@ class UpdateRespostasTableInsertColumnVotes extends Migration
     public function up()
     {
         Schema::table('respostas', function (Blueprint $table) {
-            $table->integer('votes');
+            $table->integer('votes')->default(0);
         });
     }
 
