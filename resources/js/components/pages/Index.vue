@@ -17,37 +17,82 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Mudar cor caso não esteja disponível -->
-                    <tr v-for="enquete in enquetes" :key="enquete.id">
-                        <template v-for="(atributo, index) in enquete">
-                            <td v-if="(typeof(atributo) != 'object')" :key="index">
-                                <span>{{atributo}}</span>
+                    <!-- Não Iniciada -->
+                    <template v-for="enquete in enquetes">
+                        <tr v-if="new Date(enquete.begin) > new Date()" class="alert alert-primary" :key="enquete.id">
+                            <template v-for="(atributo, index) in enquete">
+                                <td v-if="(typeof(atributo) != 'object')" :key="index">
+                                    <span>{{atributo}}</span>
+                                </td>
+                            </template>
+                            <td>Não Iniciada</td>
+                            <td>
+                                <!-- Valirdar caso não esteja disponível -->
+                                <details>
+                                    <summary>opções</summary>
+                                    <div class="d-flex flex-column">
+                                        <!-- <a :href="rota +'/'+ enquete.id" class="btn btn-sm btn-success mt-1">Responder</a> -->
+                                        <a :href="rota +'/'+ enquete.id +'/edit'" class="btn btn-sm btn-primary mt-1">Editar</a>
+                                        <form :action="rota +'/'+ enquete.id" class="mt-1" method="POST">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" :value="csrf_token">
+                                            <button type="submit" class="btn btn-sm btn-danger w-100" >Deletar</button>
+                                        </form>
+                                    </div>
+                                </details>
                             </td>
-                        </template>
-                        <td>Estado</td>
-                        <td>
-                            <!-- Valirdar caso não esteja disponível -->
-                            <details>
-                                <summary>opções</summary>
-                                <div class="d-flex flex-column">
-                                    <a :href="rota +'/'+ enquete.id" class="btn btn-sm btn-success mt-1">Responder</a>
-                                    <a :href="rota +'/'+ enquete.id +'/edit'" class="btn btn-sm btn-primary mt-1">Editar</a>
-                                    <form :action="rota +'/'+ enquete.id" class="mt-1" method="POST">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" :value="csrf_token">
-                                        <button type="submit" class="btn btn-sm btn-danger w-100" >Deletar</button>
-                                    </form>
-                                </div>
-                            </details>
-                            <!-- <a :href="rota +'/'+ enquete.id" class="btn btn-sm btn-success">Responder</a>
-                            <a :href="rota +'/edit/'+ enquete.id" class="btn btn-sm btn-primary">Editar</a>
-                            <form :action="rota +'/destroy/'+ enquete.id">
-                                <input type="hidden" name="_mehtod" value="DELETE">
-                                <input type="hidden" name="_token" :value="csrf_token">
-                                <button type="submit" class="btn btn-sm btn-danger">Deletar</button>
-                            </form> -->
-                        </td>
-                    </tr>
+                        </tr>
+
+                        <!-- Em Andamento -->
+                        <tr v-else-if="new Date(enquete.begin) <= new Date() && new Date(enquete.end) >= new Date()" :key="enquete.id">
+                            <template v-for="(atributo, index) in enquete">
+                                <td v-if="(typeof(atributo) != 'object')" :key="index">
+                                    <span>{{atributo}}</span>
+                                </td>
+                            </template>
+                            <td>Em Andamento</td>
+                            <td>
+                                <!-- Valirdar caso não esteja disponível -->
+                                <details>
+                                    <summary>opções</summary>
+                                    <div class="d-flex flex-column">
+                                        <a :href="rota +'/'+ enquete.id" class="btn btn-sm btn-success mt-1">Responder</a>
+                                        <!-- <a :href="rota +'/'+ enquete.id +'/edit'" class="btn btn-sm btn-primary mt-1">Editar</a> -->
+                                        <form :action="rota +'/'+ enquete.id" class="mt-1" method="POST">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" :value="csrf_token">
+                                            <button type="submit" class="btn btn-sm btn-danger w-100" >Deletar</button>
+                                        </form>
+                                    </div>
+                                </details>
+                            </td>
+                        </tr>
+
+                        <!-- Finalizada -->
+                        <tr v-else :key="enquete.id" class="alert alert-danger">
+                            <template v-for="(atributo, index) in enquete">
+                                <td v-if="(typeof(atributo) != 'object')" :key="index">
+                                    <span>{{atributo}}</span>
+                                </td>
+                            </template>
+                            <td>Finalizada</td>
+                            <td>
+                                <!-- Valirdar caso não esteja disponível -->
+                                <details>
+                                    <summary>opções</summary>
+                                    <div class="d-flex flex-column">
+                                        <!-- <a :href="rota +'/'+ enquete.id" class="btn btn-sm btn-success mt-1">Responder</a>
+                                        <a :href="rota +'/'+ enquete.id +'/edit'" class="btn btn-sm btn-primary mt-1">Editar</a> -->
+                                        <form :action="rota +'/'+ enquete.id" class="mt-1" method="POST">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" :value="csrf_token">
+                                            <button type="submit" class="btn btn-sm btn-danger w-100" >Deletar</button>
+                                        </form>
+                                    </div>
+                                </details>
+                            </td>
+                        </tr>
+                    </template>
                 </tbody>
             </table>
         </div>
@@ -60,6 +105,12 @@ export default {
         enquetes: Array,
         rota: String,
         csrf_token: String,
+    },
+
+    data() {
+        return {
+            
+        }
     }
 }
 </script>
