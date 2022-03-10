@@ -69,14 +69,16 @@ class EnqueteController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified survey to vote.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function vote($id)
     {
-        //
+        $enquete = Enquete::with('respostas')->find($id);
+
+        return view('vote', compact('enquete'));
     }
 
     /**

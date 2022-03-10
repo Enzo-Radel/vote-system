@@ -27,6 +27,7 @@ Vue.component('footer-component', require('./components/layout/Footer.vue').defa
 Vue.component('index-page', require('./components/pages/Index.vue').default);
 Vue.component('create-page', require('./components/pages/Create.vue').default);
 Vue.component('edit-page', require('./components/pages/Edit.vue').default);
+Vue.component('vote-page', require('./components/pages/Vote.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

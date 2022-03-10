@@ -21,4 +21,5 @@ use App\Http\Controllers\EnqueteController;
 Route::get('/', function() {
     return redirect()->route('enquete.index');
 });
-Route::resource('/enquete', EnqueteController::class);
+Route::resource('/enquete', EnqueteController::class)->except('show');
+Route::get('/enquete/{id}', [EnqueteController::class, 'vote']);
