@@ -19,16 +19,13 @@
                 <tbody>
                     <!-- Não Iniciada -->
                     <template v-for="enquete in enquetes">
-                        <tr v-if="new Date(enquete.begin) > new Date()" class="alert alert-primary" :key="enquete.id">
-                            <template v-for="(atributo, index) in enquete">
-                                <td v-if="(typeof(atributo) != 'object')" :key="index">
-                                    <span v-if="index == 'begin' || index == 'end'">{{new Date(atributo).toLocaleDateString('pt-br')}}</span>
-                                    <span v-else>{{atributo}}</span>
-                                </td>
-                            </template>
-                            <td>Não Iniciada</td>
-                            <td>
-                                <!-- Valirdar caso não esteja disponível -->
+                        <tr v-if="new Date(enquete.begin) > new Date()" class="alert alert-primay" :key="enquete.id">
+                            <td data-title="Id">{{enquete.id}}</td>
+                            <td data-title="Título">{{enquete.title}}</td>
+                            <td data-title="Início">{{new Date(enquete.begin).toLocaleDateString('pt-br')}}</td>
+                            <td data-title="Fim">{{new Date(enquete.end).toLocaleDateString('pt-br')}}</td>
+                            <td data-title="Estado">Não Iniciada</td>
+                            <td data-title="Opções">
                                 <details>
                                     <summary>opções</summary>
                                     <div class="d-flex flex-column">
@@ -45,15 +42,13 @@
                         </tr>
 
                         <!-- Em Andamento -->
-                        <tr v-else-if="new Date(enquete.begin) <= new Date() && new Date(enquete.end) >= new Date()" :key="enquete.id">
-                            <template v-for="(atributo, index) in enquete">
-                                <td v-if="(typeof(atributo) != 'object')" :key="index">
-                                    <span v-if="index == 'begin' || index == 'end'">{{new Date(atributo).toLocaleDateString('pt-br')}}</span>
-                                    <span v-else>{{atributo}}</span>
-                                </td>
-                            </template>
-                            <td>Em Andamento</td>
-                            <td>
+                        <tr class="alert" v-else-if="new Date(enquete.begin) <= new Date() && new Date(enquete.end) >= new Date()" :key="enquete.id">
+                            <td data-title="Id">{{enquete.id}}</td>
+                            <td data-title="Título">{{enquete.title}}</td>
+                            <td data-title="Início">{{new Date(enquete.begin).toLocaleDateString('pt-br')}}</td>
+                            <td data-title="Fim">{{new Date(enquete.end).toLocaleDateString('pt-br')}}</td>
+                            <td data-title="Estado">Em Andamento</td>
+                            <td data-title="Opções">
                                 <!-- Valirdar caso não esteja disponível -->
                                 <details>
                                     <summary>opções</summary>
@@ -72,14 +67,12 @@
 
                         <!-- Finalizada -->
                         <tr v-else :key="enquete.id" class="alert alert-danger">
-                            <template v-for="(atributo, index) in enquete">
-                                <td v-if="(typeof(atributo) != 'object')" :key="index">
-                                    <span v-if="index == 'begin' || index == 'end'">{{new Date(atributo).toLocaleDateString('pt-br')}}</span>
-                                    <span v-else>{{atributo}}</span>
-                                </td>
-                            </template>
-                            <td>Finalizada</td>
-                            <td>
+                            <td data-title="Id">{{enquete.id}}</td>
+                            <td data-title="Título">{{enquete.title}}</td>
+                            <td data-title="Início">{{new Date(enquete.begin).toLocaleDateString('pt-br')}}</td>
+                            <td data-title="Fim">{{new Date(enquete.end).toLocaleDateString('pt-br')}}</td>
+                            <td data-title="Estado">Finalizada</td>
+                            <td data-title="Opções">
                                 <!-- Valirdar caso não esteja disponível -->
                                 <details>
                                     <summary>opções</summary>
@@ -118,6 +111,34 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+    @media all and (max-width: 900px) {
+        td {
+            display: block;
+            text-align: right;
+        }
 
+        td:before {
+            content: attr(data-title);
+            position: absolute;
+            left: 18px;
+            display: block;
+            font-weight: 600;
+            font-size: 1em;
+        }
+
+        thead {
+            display: none;
+        }
+
+        table tbody tr {
+            margin-bottom: 10px;
+            display: block;
+            border: 1px solid #ccc;
+        }
+
+        table {
+            border-top: none;
+        }
+    }
 </style>
