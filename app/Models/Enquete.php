@@ -25,17 +25,19 @@ class Enquete extends Model
         return [
             'title'         => 'required',
             'begin'         => 'required',
-            'end'           => 'required',
+            'end'           => 'required|after_or_equal:begin|after_or_equal:today',
             'respostas.*'   => 'required',
         ];
     }
 
     public function messages() {
         return [
-            'title.required'        => 'O título é obrigatório',
-            'begin.required'        => 'A data de início é obrigatória',
-            'end.required'          => 'A data final é obrigatória',
-            'respostas.*.required'  => 'A resposta precisa ter conteúdo',
+            'title.required'            => 'O título é obrigatório',
+            'begin.required'            => 'A data de início é obrigatória',
+            'end.required'              => 'A data final é obrigatória',
+            'respostas.*.required'      => 'A resposta precisa ter conteúdo',
+            'end.after_or_equal:begin'  => 'A data final não pode ser antes da data inicial',
+            'end.after_or_equal:today'  => 'A data final não pode ser antes do dia atual',
         ];
     }
 
@@ -43,6 +45,6 @@ class Enquete extends Model
         foreach ($this->respostas as $resposta) {
             $resposta->delete();
         }
-        $this->delete();
+        return $this->delete();
     }
 }
