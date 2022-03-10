@@ -7,11 +7,15 @@
     <title>Vote System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset('css/styles.css')}}">
+    {{-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> --}}
 </head>
 <body>
     <div id="app" class="d-flex flex-column justify-content-between h-100 w-100"> 
-        <div id="header">
+        <div id="header" class="d-flex flex-column">
             <header-component></header-component>
+            <div class="w-75 align-self-center">
+                @include('flash::message')
+            </div>
         </div>
         <div id="main" class="flex-grow-1 w-75 align-self-center mt-3">
             @yield('content')

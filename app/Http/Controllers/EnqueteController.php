@@ -46,26 +46,9 @@ class EnqueteController extends Controller
  
         // dd($validator->fails());
         if ($validator->fails()) {
+            flash('Atente-se ao formulário, todos os campos são obrigatórios')->warning();
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
-        // $validateRespostas = Validator::validate($data, [
-        //     'respostas.*' => 'required',
-        // ], [
-        //     'respostas.*.required' => 'todas as respostas precisam ter conteúdo',
-        // ]);
-
-        // if (!$validateRespostas) {
-        //     return redirect()->back()->withErrors($validateRespostas);
-        // }
-
-        // $respostasVazias = [];
-        // foreach ($data['respostas'] as $resposta) {
-        //     if ($resposta == null) {
-        //         // array_push($respostasVazias, 'resposta-'+$index);
-        //         return redirect()->back();
-        //     }
-        // }
 
         $response = $enquete->create($data);
 
@@ -76,6 +59,9 @@ class EnqueteController extends Controller
                     'enquete_id' => $response->id
                 ]);
             }
+            flash('A enquete foi cadastrada com sucesso')->success();
+        } else {
+            flash('Houve um erro inesperado no cadastro da enquete')->error();
         }
 
         // Criar mensagem de resposta
@@ -102,6 +88,10 @@ class EnqueteController extends Controller
     public function edit($id)
     {
         $enquete = Enquete::with('respostas')->find($id);
+        if (!$enquete) {
+            flash('A enquete de id '.$id.' não foi encontrada no sistema')->error();
+            return redirect()->route('enquete.index');
+        }
         // Configurar mensagem de erro para caso enquete não exista
         return view('edit', compact('enquete'));
     }
@@ -118,10 +108,16 @@ class EnqueteController extends Controller
         $data = $request->all();
 
         $enquete = Enquete::find($id);
+
+        if (!$enquete) {
+            flash('A enquete de id '.$id.' não foi encontrada no sistema')->error();
+            return redirect()->route('enquete.index');
+        }
         
         $validator = Validator::validate($data, $enquete->rules(), $enquete->messages());
 
         if (!$validator) {
+            flash('Atente-se ao formulário, todos os campos são obrigatórios')->warning();
             return redirect()->back()->withErrors($validator);
         }
 
@@ -139,6 +135,9 @@ class EnqueteController extends Controller
                     'enquete_id' => $id
                 ]);
             }
+            flash('A enquete foi atualizada com sucesso')->success();
+        } else {
+            flash('Houve um erro inesperado na atualização da enquete')->error();
         }
         return redirect()->route('enquete.index');
     }
@@ -153,7 +152,18 @@ class EnqueteController extends Controller
     {
         $enquete = Enquete::find($id);
 
-        $enquete->deleteWithRespostas();
+        if (!$enquete) {
+            flash('A enquete de id '.$id.' não foi encontrada no sistema')->error();
+            return redirect()->route('enquete.index');
+        }
+
+        $response = $enquete->deleteWithRespostas();
+
+        if ($response) {
+            flash('A enquete foi deletada com sucesso')->success();
+        } else {
+            flash('Houve um erro inesperado na exclusão da enquete')->error();
+        }
         return redirect()->route('enquete.index');
     }
 }
