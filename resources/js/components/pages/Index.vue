@@ -19,11 +19,11 @@
                 <tbody>
                     <!-- Não Iniciada -->
                     <template v-for="enquete in enquetes">
-                        <tr v-if="new Date(enquete.begin) > new Date()" class="alert alert-primay" :key="enquete.id">
+                        <tr v-if="new Date(enquete.begin) > new Date()" class="alert alert-primary" :key="enquete.id">
                             <td data-title="Id">{{enquete.id}}</td>
                             <td data-title="Título">{{enquete.title}}</td>
-                            <td data-title="Início">{{new Date(enquete.begin).toLocaleDateString('pt-br')}}</td>
-                            <td data-title="Fim">{{new Date(enquete.end).toLocaleDateString('pt-br')}}</td>
+                            <td data-title="Início">{{enquete.begin | dateFormatPtBr}}</td>
+                            <td data-title="Fim">{{enquete.end | dateFormatPtBr}}</td>
                             <td data-title="Estado">Não Iniciada</td>
                             <td data-title="Opções">
                                 <details>
@@ -45,8 +45,8 @@
                         <tr class="alert" v-else-if="new Date(enquete.begin) <= new Date() && new Date(enquete.end) >= new Date()" :key="enquete.id">
                             <td data-title="Id">{{enquete.id}}</td>
                             <td data-title="Título">{{enquete.title}}</td>
-                            <td data-title="Início">{{new Date(enquete.begin).toLocaleDateString('pt-br')}}</td>
-                            <td data-title="Fim">{{new Date(enquete.end).toLocaleDateString('pt-br')}}</td>
+                            <td data-title="Início">{{enquete.begin | dateFormatPtBr}}</td>
+                            <td data-title="Fim">{{enquete.end | dateFormatPtBr}}</td>
                             <td data-title="Estado">Em Andamento</td>
                             <td data-title="Opções">
                                 <!-- Valirdar caso não esteja disponível -->
@@ -69,8 +69,8 @@
                         <tr v-else :key="enquete.id" class="alert alert-danger">
                             <td data-title="Id">{{enquete.id}}</td>
                             <td data-title="Título">{{enquete.title}}</td>
-                            <td data-title="Início">{{new Date(enquete.begin).toLocaleDateString('pt-br')}}</td>
-                            <td data-title="Fim">{{new Date(enquete.end).toLocaleDateString('pt-br')}}</td>
+                            <td data-title="Início">{{enquete.begin | dateFormatPtBr}}</td>
+                            <td data-title="Fim">{{enquete.end | dateFormatPtBr}}</td>
                             <td data-title="Estado">Finalizada</td>
                             <td data-title="Opções">
                                 <!-- Valirdar caso não esteja disponível -->
@@ -106,6 +106,15 @@ export default {
     data() {
         return {
             
+        }
+    },
+
+    filters: {
+        dateFormatPtBr(date) {
+            var ano  = date.split("-")[0];
+            var mes  = date.split("-")[1];
+            var dia  = date.split("-")[2];
+            return dia+'/'+mes+'/'+ano;
         }
     }
 }
