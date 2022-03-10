@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div class="card-header">
-            <h2>Editar Enquete: {{enquete.title}}</h2>
+            <span class="h3">Editar Enquete: {{enquete.title}}</span>
         </div>
         <div class="card-body">
             <!-- Componente de fomulário genérico de enquetes -->

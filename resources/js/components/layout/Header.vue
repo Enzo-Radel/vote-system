@@ -2,7 +2,7 @@
     <div>
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
-                <span class="navbar-brand mb-0 h1">Sistema de Votação de Enquetes</span>
+                <span class="navbar-brand h1 m-auto">Sistema de Votação de Enquetes</span>
             </div>
         </nav>
     </div>

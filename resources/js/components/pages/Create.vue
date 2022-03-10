@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div class="card-header">
-            <h2>Criar Enquete</h2>
+            <span class="h3">Criar Enquete</span>
         </div>
         <div class="card-body">
             <form-component

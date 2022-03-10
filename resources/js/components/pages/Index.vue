@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div class="card-header d-flex justify-content-between">
-            <h2>Lista de enquetes</h2>
+            <span class="h3">Lista de enquetes</span>
             <a :href="rota +'/create'" class="btn btn-success">Adicionar</a>
         </div>
         <div class="card-body">

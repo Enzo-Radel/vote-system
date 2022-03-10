@@ -1,10 +1,10 @@
 <template>
     <div class="card">
         <div class="card-header">
-            <h2>Responder Enquete</h2>
+            <span class="h3">Responder Enquete</span>
         </div>
         <div class="card-body">
-            <h3>{{enquete.title}}</h3>
+            <h4>{{enquete.title}}</h4>
             <br>
             <form :action="rota +'/'+enquete.id+'/save-vote/'" method="post" @submit.prevent="salvarResposta" id="enquete-form">
                 <input type="hidden" name="_token" :value="csrf_token">
@@ -14,12 +14,6 @@
                         <span>{{resposta.text}} - <strong>VOTOS: {{resposta.votes}}</strong></span>
                     </label>
                 </div>
-                <!-- <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Default checked radio
-                    </label>
-                </div> -->
             </form>
         </div>
         <div class="card-footer">
