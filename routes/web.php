@@ -18,4 +18,7 @@ use App\Http\Controllers\EnqueteController;
 //     return view('welcome');
 // });
 
+Route::get('/', function() {
+    return redirect()->route('enquete.index');
+});
 Route::resource('/enquete', EnqueteController::class);
