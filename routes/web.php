@@ -23,3 +23,4 @@ Route::get('/', function() {
 });
 Route::resource('/enquete', EnqueteController::class)->except('show');
 Route::get('/enquete/{id}', [EnqueteController::class, 'vote']);
+Route::post('/enquete/{id}/save-vote', [EnqueteController::class, 'saveVote']);

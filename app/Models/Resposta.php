@@ -15,4 +15,9 @@ class Resposta extends Model
         'text',
         'enquete_id'
     ];
+
+    public function addVote() {
+        $this->votes++;
+        $this->save();
+    }
 }

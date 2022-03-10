@@ -77,8 +77,30 @@ class EnqueteController extends Controller
     public function vote($id)
     {
         $enquete = Enquete::with('respostas')->find($id);
+        if (!$enquete) {
+            flash('A enquete de id '.$id.' não foi encontrada no sistema')->error();
+            return redirect()->route('enquete.index');
+        }
 
         return view('vote', compact('enquete'));
+    }
+
+    public function saveVote(Request $request, $id)
+    {
+        $data = $request->all();
+
+        // $enquete = Enquete::with('respostas')->find($id);
+
+        $resposta = Resposta::find($data['resposta']);
+        if (!$resposta) {
+            flash('A resposta informada não foi encontrada no sistema')->error();
+            return redirect()->route('enquete.index');
+        }
+
+        $resposta->addVote();
+        
+        flash('Seu voto foi cadastrado no sistema')->success();
+        return redirect()->route('enquete.index');
     }
 
     /**
