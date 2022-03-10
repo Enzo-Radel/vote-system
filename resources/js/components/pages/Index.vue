@@ -22,7 +22,8 @@
                         <tr v-if="new Date(enquete.begin) > new Date()" class="alert alert-primary" :key="enquete.id">
                             <template v-for="(atributo, index) in enquete">
                                 <td v-if="(typeof(atributo) != 'object')" :key="index">
-                                    <span>{{atributo}}</span>
+                                    <span v-if="index == 'begin' || index == 'end'">{{new Date(atributo).toLocaleDateString('pt-br')}}</span>
+                                    <span v-else>{{atributo}}</span>
                                 </td>
                             </template>
                             <td>Não Iniciada</td>
@@ -47,7 +48,8 @@
                         <tr v-else-if="new Date(enquete.begin) <= new Date() && new Date(enquete.end) >= new Date()" :key="enquete.id">
                             <template v-for="(atributo, index) in enquete">
                                 <td v-if="(typeof(atributo) != 'object')" :key="index">
-                                    <span>{{atributo}}</span>
+                                    <span v-if="index == 'begin' || index == 'end'">{{new Date(atributo).toLocaleDateString('pt-br')}}</span>
+                                    <span v-else>{{atributo}}</span>
                                 </td>
                             </template>
                             <td>Em Andamento</td>
@@ -72,7 +74,8 @@
                         <tr v-else :key="enquete.id" class="alert alert-danger">
                             <template v-for="(atributo, index) in enquete">
                                 <td v-if="(typeof(atributo) != 'object')" :key="index">
-                                    <span>{{atributo}}</span>
+                                    <span v-if="index == 'begin' || index == 'end'">{{new Date(atributo).toLocaleDateString('pt-br')}}</span>
+                                    <span v-else>{{atributo}}</span>
                                 </td>
                             </template>
                             <td>Finalizada</td>
